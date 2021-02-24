@@ -10,7 +10,7 @@ public class Auxiliar {
     static String a = "a";
     static boolean b = true;
 
-    public static String interacionPost(String param, String codiusuari, boolean b)
+    public static String interacionPost(String arg, String codiUser, boolean login)
     {
         return a;
     }
