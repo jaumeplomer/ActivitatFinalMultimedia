@@ -3,6 +3,7 @@ package com.example.activitat_final_jp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -10,11 +11,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.activitat_final_jp.database.InterficieBBDD;
+import com.example.activitat_final_jp.login.Login;
 import com.example.activitat_final_jp.preferencies.Preferencies;
+import com.example.activitat_final_jp.xarxa.Auxiliar;
+import com.example.activitat_final_jp.xarxa.Enviament;
+import com.example.activitat_final_jp.xarxa.Recepcio;
+import com.example.activitat_final_jp.xarxa.ReceptorXarxa;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -22,17 +30,22 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    Preferencies pref;
-    RecyclerView recyclerView;
-    Handler handler;
-    Runnable run;
-    Intent intent;
+    private ReceptorXarxa receptor;
+    private final int LOGIN = 1;
+    private Preferencies pref;
+    private RecyclerView recyclerView;
+    private final Handler handler = new Handler();
+    private Runnable run;
+    private Intent intent;
+    private EditText editText;
+    private InterficieBBDD db;
+    private Boolean provaMissatge = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receptor = new ReceptorXarxa();
         this.registerReceiver(receptor, filter);
 
@@ -44,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         db = new InterficieBBDD(this);
 
         try {
-            JSONObject prova_token = new JSONObject(Auxiliar.verificacioUSuari(pref));
+            JSONObject prova_token = new JSONObject(Auxiliar.verificacioUsuari(pref));
             if (!prova_token.getBoolean("correcta")) {
                 intent = new Intent(this, Login.class);
                 startActivityForResult(intent, LOGIN);
@@ -53,13 +66,15 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-*/
-        setContentView(R.layout.activity_main);
-        /*recyclerView = findViewById(R.layout.recyclerView);
-        editTextMissatge = findViewById(R.id.msg);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_main);
+        //recyclerView = findViewById(R.layout.recyclerView);
+        editText = findViewById(R.id.msg);
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,15 +96,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 handler.postDelayed(this, 1000*60);
             }
-        };*/
+        };
     }
 
-   /* public void enviar(View v)
+    public void enviar(View v)
     {
-        if (!editTextMissatge.getText().toString().equals(""))
+        if (!editText.getText().toString().equals(""))
         {
-            new Enviament(pref).execute(editTextMissatge.getText().toString());
-            editTextMissatge.setText("");
+            new Enviament(pref).execute(editText.getText().toString());
+            editText.setText("");
 
             new Recepcio(this, recyclerView, pref, provaMissatge).execute();
         }
@@ -111,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
                     pref.setRecorda((data.getBooleanExtra("recorda", false)));
 
-                    JSONObject prova_usuari = new JSONObject(Auxiliar.verificacioUsuai(pref));
+                    JSONObject prova_usuari = new JSONObject(Auxiliar.verificacioUsuari(pref));
 
                     pref.setDarrerMissatge(prova_usuari.getInt("darrermissatge"));
 
@@ -139,5 +154,5 @@ public class MainActivity extends AppCompatActivity {
         {
             this.unregisterReceiver(receptor);
         }
-    }*/
+    }
 }

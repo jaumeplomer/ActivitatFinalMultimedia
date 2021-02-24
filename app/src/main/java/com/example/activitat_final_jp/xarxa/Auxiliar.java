@@ -24,4 +24,9 @@ public class Auxiliar {
     {
 
     }
+
+    public static String verificacioUsuari(Preferencies pref)
+    {
+        return a;
+    }
 }
