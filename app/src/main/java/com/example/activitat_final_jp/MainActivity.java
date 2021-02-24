@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        /*IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receptor = new ReceptorXarxa();
         this.registerReceiver(receptor, filter);
 
@@ -46,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONObject prova_token = new JSONObject(Auxiliar.verificacioUSuari(pref));
             if (!prova_token.getBoolean("correcta")) {
-                intent = new Intent(this, LogIn.class);
+                intent = new Intent(this, Login.class);
                 startActivityForResult(intent, LOGIN);
             }
             pref.setDarrerMissatge(prova_token.getInt("darrermissatge"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.layout.recyclerView);
+        /*recyclerView = findViewById(R.layout.recyclerView);
         editTextMissatge = findViewById(R.id.msg);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 handler.postDelayed(this, 1000*60);
             }
-        };
+        };*/
     }
 
-    public void enviar(View v)
+   /* public void enviar(View v)
     {
         if (!editTextMissatge.getText().toString().equals(""))
         {
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                intent  = new Intent(this, LogIn.class);
+                intent  = new Intent(this, Login.class);
             }
         }
     }
@@ -139,5 +139,5 @@ public class MainActivity extends AppCompatActivity {
         {
             this.unregisterReceiver(receptor);
         }
-    }
+    }*/
 }
