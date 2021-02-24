@@ -24,5 +24,8 @@ public class ReceptorXarxa extends BroadcastReceiver {
         {
             Toast.makeText(context,"Xarxa OK",Toast.LENGTH_SHORT).show();
         }
+        else{
+            Toast.makeText(context,"Xarxa no OK",Toast.LENGTH_SHORT).show();
+        }
     }
 }
