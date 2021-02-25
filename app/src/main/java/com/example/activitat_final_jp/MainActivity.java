@@ -131,9 +131,8 @@ public class MainActivity extends AppCompatActivity {
 
                     pref.setRecorda((data.getBooleanExtra("recorda", false)));
 
-                    JSONObject prova_usuari = new JSONObject(Auxiliar.verificacioUsuari(pref));
-
-                    pref.setDarrerMissatge(prova_usuari.getInt("darrermissatge"));
+                    //JSONObject prova_usuari = new JSONObject(Auxiliar.verificacioUsuari(pref));
+                    //pref.setDarrerMissatge(prova_usuari.getInt("darrermissatge"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
