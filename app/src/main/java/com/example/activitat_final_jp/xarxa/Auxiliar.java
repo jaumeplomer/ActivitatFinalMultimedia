@@ -1,13 +1,16 @@
 package com.example.activitat_final_jp.xarxa;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.UrlQuerySanitizer;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.activitat_final_jp.R;
 import com.example.activitat_final_jp.database.InterficieBBDD;
 import com.example.activitat_final_jp.missatges.Missatge;
 import com.example.activitat_final_jp.missatges.MissatgeAdapter;
@@ -30,7 +33,76 @@ public class Auxiliar {
 
     public static String interacionPost(String arg, String codiUser, boolean login)
     {
-        return a;
+        if (login)
+        {
+            StringBuilder text = new StringBuilder();
+            URL url;
+            try {
+                url = new URL("http://54.211.78.147/uepcomanam.tb/public/login/");
+                HttpURLConnection httpConnexio = (HttpURLConnection) url.openConnection();
+                httpConnexio.setReadTimeout(15000);
+                httpConnexio.setChunkedStreamingMode(25000);
+                httpConnexio.setRequestMethod("POST");
+
+                httpConnexio.setRequestProperty("email", arg);
+                httpConnexio.setRequestProperty("password", codiUser);
+
+                //jaumeplomer@paucasesnovescifp.cat
+
+                httpConnexio.connect();
+
+                int responseCode = httpConnexio.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(httpConnexio.getInputStream()));
+                    String liniatxt;
+                    while ((liniatxt = in.readLine()) != null)
+                    {
+                        text.append(liniatxt);
+                    }
+                    in.close();
+                }
+            }catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            return text.toString();
+        }
+        else
+        {
+            StringBuilder text = new StringBuilder();
+            URL url;
+            try {
+                url = new URL("http://54.211.78.147/uepcomanam.tb/public/provamissatge/");
+                HttpURLConnection httpConnexio = (HttpURLConnection) url.openConnection();
+                httpConnexio.setReadTimeout(15000);
+                httpConnexio.setChunkedStreamingMode(25000);
+                httpConnexio.setRequestMethod("POST");
+
+                httpConnexio.setRequestProperty("msg", arg);
+                httpConnexio.setRequestProperty("codiusuari",codiUser);
+
+
+                httpConnexio.connect();
+
+                int responseCode = httpConnexio.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(httpConnexio.getInputStream()));
+                    String liniatxt;
+                    while ((liniatxt = in.readLine()) != null)
+                    {
+                        text.append(liniatxt);
+                    }
+                    in.close();
+                }
+            }catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            return text.toString();
+        }
+
     }
 
     public static String interacioGet(Preferencies p, boolean prova)
@@ -65,7 +137,7 @@ public class Auxiliar {
         return text.toString();
     }
 
-  /*  public static String verificacioUsuari(Preferencies pref)
+  /* public static String verificacioUsuari(Preferencies pref)
     {
         return a;
     }*/
@@ -99,11 +171,13 @@ public class Auxiliar {
     {
         ArrayList<Missatge> missatges = InterficieBBDD.llistaMissatges(darrerMissatge);
 
+        /*rv.findViewById(R.id.recyclerView);
+
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(ct, LinearLayoutManager.VERTICAL, false));
 
         MissatgeAdapter missatgeAdapter = new MissatgeAdapter(ct, missatges, idUser);
         rv.setAdapter(missatgeAdapter);
-        rv.smoothScrollToPosition(missatges.size());
+        rv.smoothScrollToPosition(missatges.size());*/
     }
 }

@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                String result = Auxiliar.interacionPost(email.getText().toString().toUpperCase(), password.getText().toString(), true);
+                String result = Auxiliar.interacionPost(email.getText().toString(), password.getText().toString(), true);
 
                 if (!result.trim().isEmpty())
                 {
@@ -64,7 +64,6 @@ public class Login extends AppCompatActivity {
                 else {
                     logInError();
                 }
-                finish();
             }
         });
     }
