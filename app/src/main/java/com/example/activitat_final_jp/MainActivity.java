@@ -2,6 +2,7 @@ package com.example.activitat_final_jp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private InterficieBBDD db;
     private Boolean provaMissatge = true;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
         pref = new Preferencies(this);
         db = new InterficieBBDD(this);
 
+        intent = new Intent(this, Login.class);
+        startActivityForResult(intent, LOGIN);
+
+        /*
         try {
             JSONObject prova_token = new JSONObject(Auxiliar.verificacioUsuari(pref));
             if (!prova_token.getBoolean("correcta")) {
@@ -65,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
             pref.setDarrerMissatge(prova_token.getInt("darrermissatge"));
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
         setContentView(R.layout.activity_main);
-        //recyclerView = findViewById(R.layout.recyclerView);
+        recyclerView = findViewById(R.layout.recycler_contingut);
         editText = findViewById(R.id.msg);
 
 
