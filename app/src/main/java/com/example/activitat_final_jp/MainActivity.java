@@ -24,6 +24,7 @@ import com.example.activitat_final_jp.xarxa.Enviament;
 import com.example.activitat_final_jp.xarxa.Recepcio;
 import com.example.activitat_final_jp.xarxa.ReceptorXarxa;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         pref = new Preferencies(this);
-
         db = new InterficieBBDD(this);
 
         try {
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

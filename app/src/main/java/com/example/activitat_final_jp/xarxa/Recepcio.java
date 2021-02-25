@@ -37,6 +37,6 @@ public class Recepcio extends AsyncTask<Integer, Integer, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Auxiliar.processarMissatges(lv, context, pref,result,prova);
+        Auxiliar.processarMissatges(lv, context, pref, result, prova);
     }
 }
