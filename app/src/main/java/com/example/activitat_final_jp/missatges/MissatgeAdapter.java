@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.activitat_final_jp.R;
 
+import java.net.PortUnreachableException;
 import java.util.ArrayList;
 
 public class MissatgeAdapter extends RecyclerView.Adapter {
@@ -66,48 +67,49 @@ public class MissatgeAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return 0;
     }
+
+    public static class MissatgeDretaViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView etNom, etMissatge, etData;
+
+        public MissatgeDretaViewHolder(View itemView) {
+            super(itemView);
+            etMissatge = itemView.findViewById(R.id.missatgeDr);
+            etNom = itemView.findViewById(R.id.nomUserDr);
+
+            Missatge mg = new Missatge();
+            mg.setMissatge(etMissatge.getText().toString());
+            mg.setNom(etNom.getText().toString());
+
+            assignaInformacio(mg);
+        }
+
+        private void assignaInformacio(Missatge missatge)
+        {
+
+        }
+    }
+
+    public static class MissatgeEsquerraViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView etNom, etMissatge, etData;
+
+        public MissatgeEsquerraViewHolder(View itemView) {
+            super(itemView);
+            etMissatge = itemView.findViewById(R.id.missatgeEsq);
+            etNom = itemView.findViewById(R.id.nomUserEsq);
+
+            Missatge mg = new Missatge();
+            mg.setMissatge(etMissatge.getText().toString());
+            mg.setNom(etNom.getText().toString());
+
+            assignaInformacio(mg);
+        }
+
+        private void assignaInformacio(Missatge missatge)
+        {
+
+        }
+    }
 }
 
-class MissatgeDretaViewHolder extends RecyclerView.ViewHolder {
-
-    public TextView et_nom, et_missatge;
-
-    public MissatgeDretaViewHolder(View itemView) {
-        super(itemView);
-        et_missatge = itemView.findViewById(R.id.missatgeDr);
-        et_nom = itemView.findViewById(R.id.nomUserDr);
-
-        Missatge mg = new Missatge();
-        mg.setMissatge(et_missatge.getText().toString());
-        mg.setNom(et_nom.getText().toString());
-
-        assignaInformacio(mg);
-    }
-
-    private void assignaInformacio(Missatge missatge)
-    {
-
-    }
-}
-
-class MissatgeEsquerraViewHolder extends RecyclerView.ViewHolder {
-
-    public TextView et_nom, et_missatge;
-
-    public MissatgeEsquerraViewHolder(View itemView) {
-        super(itemView);
-        et_missatge = itemView.findViewById(R.id.missatgeEsq);
-        et_nom = itemView.findViewById(R.id.nomUserEsq);
-
-        Missatge mg = new Missatge();
-        mg.setMissatge(et_missatge.getText().toString());
-        mg.setNom(et_nom.getText().toString());
-
-        assignaInformacio(mg);
-    }
-
-    private void assignaInformacio(Missatge missatge)
-    {
-
-    }
-}

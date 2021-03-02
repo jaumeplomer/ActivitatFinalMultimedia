@@ -19,12 +19,12 @@ public class Enviament extends AsyncTask<String, Integer, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        pref.setCodiusuari("18");
+        //pref.setCodiusuari("18");
         return Auxiliar.interacionPost(params[0], pref.getCodiusuari(), false);
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        super.onProgressUpdate(values);
+
     }
 }

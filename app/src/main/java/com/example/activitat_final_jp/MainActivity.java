@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private InterficieBBDD db;
     private Boolean provaMissatge = true;
 
-    @SuppressLint("ResourceType")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.layout.recycler_contingut);
+        recyclerView = findViewById(R.id.recyclerView);
         editText = findViewById(R.id.msg);
 
 

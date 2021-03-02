@@ -26,7 +26,8 @@ public class InterficieBBDD {
         try {
             SQLiteDatabase query = db.getWritableDatabase();
             ContentValues contingut = new ContentValues();
-            if (!codiUsuariExisteix(jObject.getString("codiusuari"))) {
+            if (!codiUsuariExisteix(jObject.getString("codiusuari")))
+            {
                 contingut.put(AjudaBBDD.COL_USER_ID, jObject.getString("codiusuari"));
                 contingut.put(AjudaBBDD.COL_USER_NAME, jObject.getString("nom"));
                 query.insert(AjudaBBDD.TAB_USER, null, contingut);
@@ -60,7 +61,8 @@ public class InterficieBBDD {
 
     public static String getNomUsuari(String userId)
     {
-        return null;
+        String select = "SELECT " + AjudaBBDD.COL_USER_NAME + " FROM " + AjudaBBDD.TAB_USER + " WHERE " + AjudaBBDD.COL_USER_ID + " = " + userId;
+        return select;
     }
 
     public static void buidaMissatges()

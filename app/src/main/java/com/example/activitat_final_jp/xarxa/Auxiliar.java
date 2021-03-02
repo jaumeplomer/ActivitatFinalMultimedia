@@ -28,8 +28,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class Auxiliar {
-    static String a = "a";
-
 
     public static String interacionPost(String arg, String codiUser, boolean login)
     {
@@ -137,10 +135,35 @@ public class Auxiliar {
         return text.toString();
     }
 
-  /* public static String verificacioUsuari(Preferencies pref)
+    public static String verificacioUsuari(Preferencies pref)
     {
-        return a;
-    }*/
+        StringBuilder text = new StringBuilder();
+        URL url;
+        try {
+            url = new URL("http://54.211.78.147/uepcomanam.tb/public/usuari/"+pref.getCodiusuari());
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setReadTimeout(15000);
+            httpURLConnection.setChunkedStreamingMode(25000);
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestProperty("Authorization",pref.getToken());
+            httpURLConnection.connect();
+
+            int responseCode = httpURLConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK)
+            {
+                BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                String linia;
+                while ((linia = in.readLine()) != null)
+                {
+                    text.append(linia);
+                }
+                in.close();
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return text.toString();
+    }
 
     public static void processarMissatges(RecyclerView rv, Context ct, Preferencies pref, String resultat, boolean prova)
     {
@@ -171,13 +194,11 @@ public class Auxiliar {
     {
         ArrayList<Missatge> missatges = InterficieBBDD.llistaMissatges(darrerMissatge);
 
-        /*rv.findViewById(R.id.recyclerView);
-
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(ct, LinearLayoutManager.VERTICAL, false));
 
         MissatgeAdapter missatgeAdapter = new MissatgeAdapter(ct, missatges, idUser);
         rv.setAdapter(missatgeAdapter);
-        rv.smoothScrollToPosition(missatges.size());*/
+        rv.smoothScrollToPosition(missatges.size());
     }
 }
