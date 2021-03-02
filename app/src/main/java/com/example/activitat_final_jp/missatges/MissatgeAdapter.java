@@ -1,6 +1,7 @@
 package com.example.activitat_final_jp.missatges;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,15 +13,15 @@ import com.example.activitat_final_jp.R;
 
 import java.net.PortUnreachableException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class MissatgeAdapter extends RecyclerView.Adapter {
+public class MissatgeAdapter extends RecyclerView.Adapter<MissatgeAdapter.Holder> {
 
-    private int TIPUS_IGUAL = 1;
-    private int TIPUS_DIFF = 2;
-
-    private Context ct;
-    private ArrayList<Missatge> llista_missatges;
-    private String idUserActual;
+    public int TIPUS_IGUAL = 1;
+    public int TIPUS_DIFF = 2;
+    public LayoutInflater inflador = null;
+    public Context ct;
+    public List<Missatge> llista_missatges;
     private int idUserActualEnter;
 
 
@@ -28,8 +29,6 @@ public class MissatgeAdapter extends RecyclerView.Adapter {
     {
         this.ct = ct;
         this.llista_missatges = llista_missatges;
-        this.idUserActual = idUserActual;
-        this.idUserActualEnter = Integer.parseInt(idUserActual);
     }
 
     @Override
@@ -43,72 +42,47 @@ public class MissatgeAdapter extends RecyclerView.Adapter {
         }
     }
 
-    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view = parent;
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+
+        //viewType = TIPUS_DIFF;
+        inflador = LayoutInflater.from(parent.getContext());
        if (viewType == TIPUS_IGUAL)
        {
-           MissatgeDretaViewHolder mgdreta = new MissatgeDretaViewHolder(view);
-           return mgdreta;
+
+           View view = inflador.inflate(R.layout.missatge_dreta, parent, false);
+           return new Holder(view);
        }
        else {
-           MissatgeEsquerraViewHolder mgesq = new MissatgeEsquerraViewHolder(view);
-           return mgesq;
+           View view = inflador.inflate(R.layout.missatge_esquerra, parent, false);
+           return new Holder(view);
        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull Holder holder, int position) {
+        Missatge missatge = llista_missatges.get(position);
+        holder.etMissatge.setText(missatge.getMissatge());
+        holder.etData.setText(missatge.getData());
+        holder.etNom.setText(missatge.getNom());
     }
+
 
     @Override
     public int getItemCount() {
-        return 0;
+        return llista_missatges.size();
     }
 
-    public static class MissatgeDretaViewHolder extends RecyclerView.ViewHolder {
+    public class Holder extends RecyclerView.ViewHolder
+    {
+        public TextView etMissatge, etData, etNom;
 
-        public TextView etNom, etMissatge, etData;
-
-        public MissatgeDretaViewHolder(View itemView) {
+        public Holder(View itemView) {
             super(itemView);
+            etData = itemView.findViewById(R.id.dataDr);
             etMissatge = itemView.findViewById(R.id.missatgeDr);
-            etNom = itemView.findViewById(R.id.nomUserDr);
-
-            Missatge mg = new Missatge();
-            mg.setMissatge(etMissatge.getText().toString());
-            mg.setNom(etNom.getText().toString());
-
-            assignaInformacio(mg);
-        }
-
-        private void assignaInformacio(Missatge missatge)
-        {
-
-        }
-    }
-
-    public static class MissatgeEsquerraViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView etNom, etMissatge, etData;
-
-        public MissatgeEsquerraViewHolder(View itemView) {
-            super(itemView);
-            etMissatge = itemView.findViewById(R.id.missatgeEsq);
-            etNom = itemView.findViewById(R.id.nomUserEsq);
-
-            Missatge mg = new Missatge();
-            mg.setMissatge(etMissatge.getText().toString());
-            mg.setNom(etNom.getText().toString());
-
-            assignaInformacio(mg);
-        }
-
-        private void assignaInformacio(Missatge missatge)
-        {
-
+            etNom = itemView.findViewById(R.id.nomDr);
         }
     }
 }

@@ -27,7 +27,8 @@ public class Recepcio extends AsyncTask<Integer, Integer, String> {
 
     @Override
     protected String doInBackground(Integer... params) {
-        return Auxiliar.interacioGet(pref, prova);
+        return null;
+        //return Auxiliar.processarMissatges(lv, context, pref, null, prova);
     }
 
     @Override

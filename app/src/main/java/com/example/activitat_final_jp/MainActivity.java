@@ -2,15 +2,14 @@ package com.example.activitat_final_jp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -56,12 +55,9 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         pref = new Preferencies(this);
-        db = new InterficieBBDD(this);
+        db = new InterficieBBDD(this.getApplicationContext());
+        db.obri();
 
-        intent = new Intent(this, Login.class);
-        startActivityForResult(intent, LOGIN);
-
-        /*
         try {
             JSONObject prova_token = new JSONObject(Auxiliar.verificacioUsuari(pref));
             if (!prova_token.getBoolean("correcta")) {
@@ -71,15 +67,16 @@ public class MainActivity extends AppCompatActivity {
             pref.setDarrerMissatge(prova_token.getInt("darrermissatge"));
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
 
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
         editText = findViewById(R.id.msg);
-
+        Log.w("test", "hola");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +85,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        run = new Runnable() {
-            @Override
+        Runnable run = new Runnable() {
             public void run()
             {
                 try
                 {
+                    Log.w("test", "run");
+                    Auxiliar.processarMissatges(recyclerView,null, pref, null, provaMissatge);
                     new Recepcio(MainActivity.this, recyclerView, pref, provaMissatge).execute();
                 } catch (Exception e)
                 {
@@ -102,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(this, 1000*60);
             }
         };
+        Auxiliar.processarMissatges(recyclerView,this, pref,null, provaMissatge);
+        Log.w("test", "run2");
     }
 
     public void enviar(View v)
@@ -129,10 +129,10 @@ public class MainActivity extends AppCompatActivity {
                     pref.setToken(user.getString("token"));
                     pref.setPassword(data.getStringExtra("pass"));
 
-                    pref.setRecorda((data.getBooleanExtra("recorda", false)));
+                    pref.setRecorda((data.getBooleanExtra("recorda", true)));
 
-                    //JSONObject prova_usuari = new JSONObject(Auxiliar.verificacioUsuari(pref));
-                    //pref.setDarrerMissatge(prova_usuari.getInt("darrermissatge"));
+                    JSONObject prova_usuari = new JSONObject(Auxiliar.verificacioUsuari(pref));
+                    pref.setDarrerMissatge(prova_usuari.getInt("darrermissatge"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -3,7 +3,9 @@ package com.example.activitat_final_jp.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.activitat_final_jp.missatges.Missatge;
 
@@ -15,28 +17,51 @@ import java.util.ArrayList;
 public class InterficieBBDD {
 
     private static AjudaBBDD db;
+    private static SQLiteDatabase sqlDb;
     private static boolean igual = true;
+    private static String[] totesC = {AjudaBBDD.COL_MSG_ID, AjudaBBDD.COL_MSG_MSG, AjudaBBDD.COL_MSG_DATE, AjudaBBDD.COL_MSG_ID_USER, AjudaBBDD.COL_MSG_LAST_MSG};//Totes les columnes
 
     public InterficieBBDD(Context context)
     {
         db = new AjudaBBDD(context);
     }
 
+    public void obri()
+    {
+        try
+        {
+            sqlDb = db.getWritableDatabase();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void emmagatzemaRebut(JSONObject jObject) {
-        try {
-            SQLiteDatabase query = db.getWritableDatabase();
+
+        Missatge msg = new Missatge();
+        Log.w("test", jObject.toString());
+
+        try
+        {
+            msg.setMissatge(jObject.getString("msg"));
+            msg.setId(jObject.getString("codimissatge"));
+            msg.setData(jObject.getString("datahora"));
+            msg.setIdUsuari(jObject.getString("codiusuari"));
+            msg.setNom(jObject.getString("nom"));
+            //
             ContentValues contingut = new ContentValues();
-            if (!codiUsuariExisteix(jObject.getString("codiusuari")))
-            {
-                contingut.put(AjudaBBDD.COL_USER_ID, jObject.getString("codiusuari"));
-                contingut.put(AjudaBBDD.COL_USER_NAME, jObject.getString("nom"));
-                query.insert(AjudaBBDD.TAB_USER, null, contingut);
-            }
-            contingut = new ContentValues();
-            query = db.getWritableDatabase();
-            contingut.put(AjudaBBDD.COL_MSG_ID, jObject.getString("id"));
-            contingut.put(AjudaBBDD.COL_MSG_MSG, jObject.getString("msg"));
-            query.insert(AjudaBBDD.TAB_MSG, null, contingut);
+            ContentValues contingut2 = new ContentValues();
+            contingut.put(AjudaBBDD.COL_MSG_ID, msg.getId());
+            contingut.put(AjudaBBDD.COL_MSG_MSG, msg.getMissatge());
+            contingut.put(AjudaBBDD.COL_MSG_DATE, msg.getData());
+            contingut.put(AjudaBBDD.COL_MSG_ID_USER, msg.getIdUsuari());
+            contingut2.put(AjudaBBDD.COL_USER_ID, msg.getIdUsuari());
+            contingut2.put(AjudaBBDD.COL_USER_NAME, msg.getNom());
+
+            sqlDb.insert(AjudaBBDD.TAB_USER, null, contingut2);
+            sqlDb.insert(AjudaBBDD.TAB_MSG, null, contingut);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -50,13 +75,30 @@ public class InterficieBBDD {
 
     public static ArrayList<Missatge> llistaMissatges(int idUltimoMsg)
     {
-
-        return null;
+        ArrayList<Missatge> test = new ArrayList<>();
+        Cursor cursor = sqlDb.query(AjudaBBDD.TAB_MSG, totesC,null, null, null, null, AjudaBBDD.COL_MSG_DATE + " ASC");
+        Cursor cursor1 = sqlDb.query(AjudaBBDD.TAB_USER, new String[]{AjudaBBDD.COL_USER_NAME}, null, null, null, null, null);
+        cursor.moveToFirst();
+        cursor1.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Missatge msg = cursorToMissatge(cursor);
+            msg.setNom(cursor1.getString(0));
+            test.add(msg);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return test;
     }
 
     public static Missatge cursorToMissatge(Cursor cursor)
     {
-        return null;
+        Missatge msg = new Missatge();
+        msg.setId(cursor.getString(0));
+        msg.setMissatge(cursor.getString(1));
+        msg.setData(cursor.getString(2));
+        msg.setNom(cursor.getString(3));
+        msg.setIdUsuari(cursor.getString(4));
+        return msg;
     }
 
     public static String getNomUsuari(String userId)
@@ -67,6 +109,6 @@ public class InterficieBBDD {
 
     public static void buidaMissatges()
     {
-
+        sqlDb.delete(AjudaBBDD.TAB_MSG, null, null);
     }
 }

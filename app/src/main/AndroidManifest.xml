@@ -11,8 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Activitat_Final_JP"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/Theme.Activitat_Final_JP">
         <activity android:name=".login.Login"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
