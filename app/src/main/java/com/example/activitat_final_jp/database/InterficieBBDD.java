@@ -47,7 +47,7 @@ public class InterficieBBDD {
             msg.setData(jObject.getString("datahora"));
             msg.setIdUsuari(jObject.getString("codiusuari"));
             msg.setNom(jObject.getString("nom"));
-            //
+
             ContentValues contingut = new ContentValues();
             ContentValues contingut2 = new ContentValues();
             contingut.put(AjudaBBDD.COL_MSG_ID, msg.getId());
@@ -55,18 +55,13 @@ public class InterficieBBDD {
             contingut.put(AjudaBBDD.COL_MSG_DATE, msg.getData());
             contingut.put(AjudaBBDD.COL_MSG_ID_USER, msg.getIdUsuari());
 
-
-
-
             contingut2.put(AjudaBBDD.COL_USER_ID, msg.getIdUsuari());
             contingut2.put(AjudaBBDD.COL_USER_NAME, msg.getNom());
             contingut2.put(AjudaBBDD.COL_USER_EMAIL, msg.getNom());
             contingut2.put(AjudaBBDD.COL_USER_IMG, msg.getNom());
 
-            
             sqlDb.insert(AjudaBBDD.TAB_USER, null, contingut2);
             sqlDb.insert(AjudaBBDD.TAB_MSG, null, contingut);
-
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -84,8 +79,6 @@ public class InterficieBBDD {
         ArrayList<Missatge> test = new ArrayList<>();
 
         Cursor cursor = sqlDb.rawQuery("SELECT DISTINCT msg.id, msg.msg, msg.date, msg.userId, msg.lstMsg, usuario.id, usuario.name FROM msg, usuario  WHERE msg.userId = usuario.id",null);
-        
-
 
         cursor.moveToFirst();
 

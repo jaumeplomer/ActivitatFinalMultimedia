@@ -112,39 +112,6 @@ public class Auxiliar {
 
     }
 
-    public static String interacioGet(Preferencies pref, boolean prova)
-    {
-        StringBuilder text = new StringBuilder();
-        URL url;
-        try {
-            url = new URL("http://54.211.78.147/uepcomanam.tb/public/provamissatge/");
-
-            HttpURLConnection httpConnexio = (HttpURLConnection) url.openConnection();
-            httpConnexio.setRequestMethod("GET");
-            httpConnexio.connect();
-
-            int responseCode = httpConnexio.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK)
-            {
-                BufferedReader in = new BufferedReader(new InputStreamReader(httpConnexio.getInputStream()));
-                String liniatxt;
-                while ((liniatxt = in.readLine()) != null)
-                {
-                    text.append(liniatxt);
-                }
-                in.close();
-            }
-
-            //Aqui fas coses JSON
-
-        }catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        return text.toString();
-    }
-
     public static void processarMissatges(RecyclerView rv, Context ct, Preferencies pref, String resultat, boolean prova)
     {
         Log.w("test", "processarMissatges");
