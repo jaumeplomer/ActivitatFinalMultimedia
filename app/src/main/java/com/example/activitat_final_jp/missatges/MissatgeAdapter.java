@@ -10,10 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.activitat_final_jp.R;
+import com.example.activitat_final_jp.preferencies.Preferencies;
 
 import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PropertyResourceBundle;
 
 public class MissatgeAdapter extends RecyclerView.Adapter<MissatgeAdapter.Holder> {
 
@@ -33,7 +35,8 @@ public class MissatgeAdapter extends RecyclerView.Adapter<MissatgeAdapter.Holder
 
     @Override
     public int getItemViewType(int position) {
-        if (idUserActualEnter == Integer.parseInt(llista_missatges.get(position).getIdUsuari()))
+        Preferencies pref = new Preferencies(ct);
+        if (Integer.parseInt(llista_missatges.get(position).getIdUsuari()) == Integer.parseInt(pref.getCodiusuari()))
         {
             return TIPUS_IGUAL;
         }
@@ -45,19 +48,16 @@ public class MissatgeAdapter extends RecyclerView.Adapter<MissatgeAdapter.Holder
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-
-        //viewType = TIPUS_DIFF;
         inflador = LayoutInflater.from(parent.getContext());
-       if (viewType == TIPUS_IGUAL)
-       {
-
-           View view = inflador.inflate(R.layout.missatge_dreta, parent, false);
-           return new Holder(view);
-       }
-       else {
+        if (viewType == TIPUS_IGUAL)
+        {
+            View view = inflador.inflate(R.layout.missatge_dreta, parent, false);
+            return new Holder(view);
+        }
+        else {
            View view = inflador.inflate(R.layout.missatge_esquerra, parent, false);
            return new Holder(view);
-       }
+        }
     }
 
     @Override

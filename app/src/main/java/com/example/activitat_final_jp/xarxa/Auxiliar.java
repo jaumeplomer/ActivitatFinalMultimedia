@@ -161,6 +161,10 @@ public class Auxiliar {
             int responseCode = httpConnexio.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK)
             {
+                if (prova)
+                {
+                    InterficieBBDD.buidaMissatges();
+                }
                 in = new BufferedReader(new InputStreamReader(httpConnexio.getInputStream()));
             }
             String liniatxt;
@@ -172,13 +176,13 @@ public class Auxiliar {
 
             JSONObject json = new JSONObject(text.toString());
             JSONArray jArr = json.getJSONArray("dades");
-            if (prova)
-            {
-                InterficieBBDD.buidaMissatges();
-            }
+
             for (int i = 0; i < jArr.length(); i++)
             {
                 JSONObject jsonObject = jArr.getJSONObject(i);
+
+                Log.w("tcds", jsonObject.toString());
+
                 InterficieBBDD.emmagatzemaRebut(jsonObject);
             }
             Log.w("Debug", "Dbug-linia184-Auxiliar");

@@ -8,35 +8,42 @@
     android:id="@+id/missatge_dreta">
 
     <RelativeLayout
-        android:layout_width="415dp"
-        android:layout_height="85dp"
+        android:layout_width="305dp"
+        android:layout_height="wrap_content"
+        android:background="#00BCD4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/missatgeDr"
-            android:layout_width="wrap_content"
+            android:id="@+id/nomDr"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:text="TextView" />
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/missatgeDr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/nomDr"
+            android:text="TextView"
+            android:textSize="16dp"
+            android:textAlignment="textEnd" />
 
         <TextView
             android:id="@+id/dataDr"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="100dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/nomDr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="40dp"
-            android:text="TextView" />
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/missatgeDr"
+            android:layout_marginBottom="10dp"
+            android:text="TextView"
+            android:textAlignment="textEnd"
+            android:textSize="12dp" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
